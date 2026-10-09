@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Smart Card & Apple Wallet Pass | Kendren J. Cornish · NOT2L8</title>
+  <meta name="description" content="KJ's Smart Contact Pass. Save contact, view real-time status, add Apple Wallet pass, and vouch.">
+  <meta name="theme-color" content="#090b10">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* 3D Flip Card Effect for Apple Wallet Pass */
+    .pass-perspective {
+      perspective: 1200px;
+      margin: 1.5rem auto 2rem;
+      max-width: 440px;
+    }
+
+    .pass-container {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .pass-container.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .pass-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 26px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.25);
+    }
+
+    .pass-front {
+      background: linear-gradient(145deg, #18122B 0%, #0c0a1a 50%, #030712 100%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .pass-back {
+      background: linear-gradient(145deg, #0f172a 0%, #090d16 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transform: rotateY(180deg);
+      overflow-y: auto;
+    }
+
+    .apple-wallet-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      background: #000000;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 14px;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transition: all 0.2s ease;
+      width: 100%;
+      text-decoration: none;
+    }
+
+    .apple-wallet-btn:hover {
+      background: #111111;
+      border-color: #ffffff;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Dynamic Lighting & Grid -->
+  <div class="ambient-bg">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+  </div>
+  <div class="grid-overlay"></div>
+  <canvas id="confetti-canvas"></canvas>
+  <div id="toast-container" class="toast-container"></div>
+
+  <main class="page-container" style="max-width: 680px;">
+
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <a href="/" class="brand-pill" style="text-decoration: none;">
+        <span class="status-dot-pulse"></span>
+        <span>NOT2L8 Protocol · @KJ</span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="/vouch" class="icon-btn" title="Vouch for KJ" style="width: auto; padding: 0 0.85rem; gap: 0.35rem; font-size: 0.8125rem; font-weight: 600; text-decoration: none;">
+          <span>✍️</span> Vouch
+        </a>
+        <a href="/wall" class="icon-btn" title="Testimonial Wall" style="width: auto; padding: 0 0.85rem; gap: 0.35rem; font-size: 0.8125rem; font-weight: 600; text-decoration: none;">
+          <span>🧱</span> Wall
+        </a>
+        <button class="icon-btn" onclick="cycleTheme()" title="Switch Visual Theme">🎨</button>
+      </div>
+    </header>
+
+    <!-- Header Description -->
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <h1 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.35rem;">
+        Kendren's Smart Card & Pass
+      </h1>
+      <p style="font-size: 0.9375rem; color: var(--text-secondary); max-width: 480px; margin: 0 auto;">
+        Digital business card + live status feed. Scan the QR code, save contact to your phone, or add to Apple Wallet.
+      </p>
+    </div>
+
+    <!-- 3 Core Action Buttons -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 2rem;">
+      <button onclick="downloadVCard()" class="cta-button primary" style="padding: 1rem 0.5rem;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        <span>Save Contact</span>
+      </button>
+
+      <a href="https://kendren.us" target="_blank" rel="noopener noreferrer" class="cta-button" style="padding: 1rem 0.5rem;" onclick="sounds.playPop()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <span>View Portfolio</span>
+      </a>
+
+      <a href="/vouch" class="cta-button" style="padding: 1rem 0.5rem;" onclick="sounds.playPop()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+        <span>Vouch for KJ</span>
+      </a>
+    </div>
+
+    <!-- 3D Interactive Apple Wallet Pass -->
+    <div class="pass-perspective">
+      <div id="pass-card" class="pass-container" onclick="togglePassFlip()">
+
+        <!-- FRONT OF APPLE WALLET PASS -->
+        <div class="pass-face pass-front">
+          <div>
+            <!-- Header Row -->
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.85rem; margin-bottom: 1.25rem;">
+              <div style="font-weight: 800; letter-spacing: 0.08em; font-size: 0.9375rem; color: #ffffff;">
+                NOT2L8
+              </div>
+              <div style="background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(52, 211, 153, 0.35); color: #34d399; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 9999px;">
+                <span id="pass-status-tag">🟢 IN THE LAB</span>
+              </div>
+            </div>
+
+            <!-- Identity -->
+            <div style="margin-bottom: 1.5rem;">
+              <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; font-weight: 600;">PASS HOLDER</div>
+              <div style="font-size: 1.5rem; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;">Kendren J. Cornish</div>
+              <div style="font-size: 0.8125rem; color: #a855f7; font-weight: 600; margin-top: 0.2rem;">Applied AI Designer · SCAD Lacrosse #14</div>
+            </div>
+
+            <!-- Now & Next Fields (Live Status Feed) -->
+            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1rem; margin-bottom: 1.25rem;">
+              <div style="margin-bottom: 0.75rem;">
+                <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; font-weight: 700;">NOW</div>
+                <div id="pass-now-text" style="font-size: 0.875rem; color: #f1f5f9; font-weight: 600; line-height: 1.4;">
+                  SCAD Creative AI Campus Hub & Gemini Workshops
+                </div>
+              </div>
+
+              <div>
+                <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; font-weight: 700;">NEXT</div>
+                <div id="pass-next-text" style="font-size: 0.8125rem; color: #94a3b8; line-height: 1.4;">
+                  Remotion & Manim Mathematical Animation Engine
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom: QR Code & Insider Number -->
+          <div>
+            <div style="background: #ffffff; width: 140px; height: 140px; border-radius: 16px; padding: 10px; margin: 0 auto 0.85rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5);" id="card-qr-box"></div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.65rem; font-size: 0.75rem; color: #64748b; font-family: var(--font-mono);">
+              <span>INSIDER #042</span>
+              <span style="color: #a855f7;">Tap card to flip ↺</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BACK OF APPLE WALLET PASS -->
+        <div class="pass-face pass-back">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.85rem; margin-bottom: 1.25rem;">
+              <div style="font-weight: 800; color: #ffffff; font-size: 0.9375rem;">PASS DETAILS & CHANNELS</div>
+              <div style="font-size: 0.75rem; color: #a855f7;">Flip front ↺</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.875rem;">
+              <a href="https://kendren.us" target="_blank" class="link-card" style="padding: 0.75rem 1rem;" onclick="event.stopPropagation()">
+                <span>🌐 Portfolio: kendren.us</span>
+                <span>→</span>
+              </a>
+              <a href="mailto:Kendren@proton.me" class="link-card" style="padding: 0.75rem 1rem;" onclick="event.stopPropagation()">
+                <span>✉️ Direct Email: Kendren@proton.me</span>
+                <span>→</span>
+              </a>
+              <a href="https://calendly.com" target="_blank" class="link-card" style="padding: 0.75rem 1rem;" onclick="event.stopPropagation()">
+                <span>🗓️ Book 1:1 Strategy / Coffee Chat</span>
+                <span>→</span>
+              </a>
+              <a href="/vouch" class="link-card" style="padding: 0.75rem 1rem; border-color: var(--border-hover);" onclick="event.stopPropagation()">
+                <span>✍️ Vouch for KJ (Takes 60s)</span>
+                <span>→</span>
+              </a>
+              <a href="/wall" class="link-card" style="padding: 0.75rem 1rem;" onclick="event.stopPropagation()">
+                <span>🧱 Testimonial Wall (14 approved)</span>
+                <span>→</span>
+              </a>
+              <a href="https://github.com/cornishlikeadam" target="_blank" class="link-card" style="padding: 0.75rem 1rem;" onclick="event.stopPropagation()">
+                <span>🐙 GitHub: @cornishlikeadam</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.85rem; font-size: 0.75rem; color: #64748b; text-align: center;">
+            NOT2L8 Wallet Pass Protocol · Automatic Status Pushes via APNs
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Apple Wallet Action Button -->
+    <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+      <button class="apple-wallet-btn" onclick="addToWalletSim()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.99.6-2.63 1.35-.57.65-1.07 1.72-.94 2.74 1.01.08 2.03-.49 2.64-1.24z"/></svg>
+        <span>Add to Apple Wallet (.pkpass)</span>
+      </button>
+
+      <button class="btn-secondary-block" onclick="testNotificationPush()">
+        🔔 Simulate Lock Screen Status Notification
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <p>© 2026 NOT2L8 · Kendren J. Cornish · Applied AI at SCAD</p>
+      <div class="footer-meta">
+        <a href="/" class="footer-link">Home</a>
+        <span>•</span>
+        <a href="/wall" class="footer-link">Testimonial Wall</a>
+        <span>•</span>
+        <a href="/vouch" class="footer-link">Vouch Form</a>
+        <span>•</span>
+        <a href="/admin" class="footer-link">Private Admin</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="qrcode.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    function togglePassFlip() {
+      sounds.playPop();
+      document.getElementById("pass-card").classList.toggle("flipped");
+    }
+
+    function addToWalletSim() {
+      sounds.playSuccess();
+      fireConfetti();
+      showToast("Pass saved to Apple Wallet! You will receive live status pushes.", "🎟️");
+    }
+
+    function testNotificationPush() {
+      sounds.playSuccess();
+      showToast("NOT2L8 Status Update: KJ is '🟢 IN THE LAB' building Gemini workshops", "🔔");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      applyTheme();
+
+      // Render Card QR Code pointing to this /card URL
+      const qrBox = document.getElementById("card-qr-box");
+      const currentUrl = window.location.href.startsWith("http") ? window.location.href : "https://ultimate-contact-page.vercel.app/card";
+      new QRCode(qrBox, {
+        text: currentUrl,
+        width: 120,
+        height: 120,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    });
+  </script>
+</body>
+</html>

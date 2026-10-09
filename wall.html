@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Testimonial Wall | Kendren J. Cornish (@KJ) · NOT2L8</title>
+  <meta name="description" content="Verified reviews and vouches for Kendren J. Cornish from teammates, coaches, mentors, and creative collaborators.">
+  <meta name="theme-color" content="#090b10">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Dynamic Lighting & Grid -->
+  <div class="ambient-bg">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+  <div class="grid-overlay"></div>
+  <canvas id="confetti-canvas"></canvas>
+  <div id="toast-container" class="toast-container"></div>
+
+  <main class="page-container" style="max-width: 880px;">
+
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <a href="/" class="brand-pill" style="text-decoration: none;">
+        <span class="status-dot-pulse"></span>
+        <span>NOT2L8 Protocol · @KJ</span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="/vouch" class="cta-button primary" style="width: auto; padding: 0.45rem 1rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 700; text-decoration: none; display: inline-flex; flex-direction: row; gap: 0.4rem;">
+          <span>✍️ Vouch for KJ</span>
+        </a>
+        <a href="/card" class="icon-btn" title="Smart Card" style="width: auto; padding: 0 0.85rem; gap: 0.35rem; font-size: 0.8125rem; font-weight: 600; text-decoration: none;">
+          <span>📇</span> Card
+        </a>
+        <button class="icon-btn" onclick="cycleTheme()" title="Switch Visual Theme">🎨</button>
+      </div>
+    </header>
+
+    <!-- Wall Hero & Milestone Tracker -->
+    <section class="hero-card" style="padding: 2rem 1.75rem; margin-bottom: 1.5rem;">
+      <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <div style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.8rem; border-radius: 9999px; background: var(--badge-bg); color: var(--accent-primary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+          🧱 The Wall of Truth
+        </div>
+        <h1 style="font-size: 2.1rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 0.5rem;">
+          Verified Vouches for KJ
+        </h1>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 540px; margin-bottom: 1.5rem; line-height: 1.5;">
+          Real words from 6:00 AM lacrosse practices, military training, campus leadership, and late-night AI engineering.
+        </p>
+
+        <!-- Phase 1 Milestone Progress Bar -->
+        <div style="width: 100%; max-width: 500px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 18px; padding: 1rem 1.25rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.5rem;">
+            <span style="color: var(--text-primary); display: flex; align-items: center; gap: 0.4rem;">
+              <span>🎯</span> Phase 1 Target: 25 Approved Vouches
+            </span>
+            <span id="milestone-text" style="color: var(--accent-primary); font-family: var(--font-mono);">14 / 25 (56%)</span>
+          </div>
+
+          <div style="width: 100%; height: 8px; background: var(--bg-card); border-radius: 9999px; overflow: hidden; position: relative;">
+            <div id="milestone-bar" style="width: 56%; height: 100%; background: var(--accent-gradient); border-radius: 9999px; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"></div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; font-size: 0.6875rem; color: var(--text-muted);">
+            <span>Teammates first · Week 2 rollout</span>
+            <span>11 more to unlock Milestone Push 🚀</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controls Bar: Category Filters & Search -->
+    <div class="controls-bar" style="margin-bottom: 1.5rem;">
+      <div class="category-filters" style="margin-bottom: 0; padding-bottom: 0;">
+        <button class="filter-chip active" onclick="filterWallCategory('all', this)">All Vouches (<span id="count-all">14</span>)</button>
+        <button class="filter-chip" onclick="filterWallCategory('Teammate', this)">🥍 Teammates</button>
+        <button class="filter-chip" onclick="filterWallCategory('Coach', this)">🧢 Coaches</button>
+        <button class="filter-chip" onclick="filterWallCategory('Creative', this)">🎨 Creative & AI</button>
+        <button class="filter-chip" onclick="filterWallCategory('Mentorship', this)">🤝 Mentorship</button>
+        <button class="filter-chip" onclick="filterWallCategory('Work', this)">💼 Campus Work</button>
+      </div>
+
+      <div class="search-box">
+        <span class="search-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </span>
+        <input type="text" id="wall-search" class="search-input" placeholder="Search by name, role, quote..." oninput="handleWallSearch(this.value)">
+      </div>
+    </div>
+
+    <!-- Pinned Top 3 Highlights -->
+    <div id="pinned-section" style="margin-bottom: 1.5rem;">
+      <div style="font-size: 0.8125rem; font-weight: 700; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.4rem;">
+        <span>📌</span> Pinned by KJ (Work Ethic & Character)
+      </div>
+      <div id="pinned-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;"></div>
+    </div>
+
+    <!-- Masonry Wall Container -->
+    <div id="wall-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; align-items: start;"></div>
+
+    <!-- Floating Action Button for Vouching -->
+    <div style="position: sticky; bottom: 2rem; display: flex; justify-content: center; z-index: 50; margin-top: 2.5rem;">
+      <a href="/vouch" class="cta-button primary" style="width: auto; padding: 0.85rem 1.75rem; border-radius: 9999px; box-shadow: 0 10px 30px var(--accent-glow); font-size: 0.9375rem; font-weight: 700; text-decoration: none; display: flex; flex-direction: row; gap: 0.5rem; align-items: center;">
+        <span>✍️ Leave Your 60s Vouch for KJ</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <p>© 2026 NOT2L8 · Kendren J. Cornish · Applied AI at SCAD</p>
+      <div class="footer-meta">
+        <a href="/" class="footer-link">Home</a>
+        <span>•</span>
+        <a href="/vouch" class="footer-link">Vouch Form</a>
+        <span>•</span>
+        <a href="/card" class="footer-link">Smart Card</a>
+        <span>•</span>
+        <a href="/admin" class="footer-link">Private Admin</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    const INITIAL_WALL_VOUCHES = [
+      {
+        id: "vouch-001",
+        number: "001",
+        name: "Marcus Sterling",
+        relationship: "Teammate",
+        role: "SCAD Lacrosse · Midfield Captain",
+        quote: "KJ is the first one at the field for 6:00 AM practice and the last one to leave the weight room. When the game is tied in the 4th quarter, he is the voice keeping everyone calm, locked in, and focused on executing. That discipline bleeds into everything he builds.",
+        pinned: true,
+        status: "approved"
+      },
+      {
+        id: "vouch-002",
+        number: "002",
+        name: "Coach Davis",
+        relationship: "Coach",
+        role: "SCAD Men's Lacrosse Head Coach",
+        quote: "Kendren brings military engineering grit and relentless focus to our locker room. His leadership isn't loud or performative—it's consistent daily standard-setting. If KJ commits to a play, a drill, or a team objective, consider it done.",
+        pinned: true,
+        status: "approved"
+      },
+      {
+        id: "vouch-003",
+        number: "003",
+        name: "Elena Rostova",
+        relationship: "Creative",
+        role: "Motion Design & AI Collaborator · SCAD",
+        quote: "Most computer science engineers talk down to visual artists. Kendren did the opposite: he sat with our animation studio for hours, understood our storyboard pain points, and built generative AI pipelines that made our rendering 5x faster without sacrificing our aesthetic control.",
+        pinned: true,
+        status: "approved"
+      },
+      {
+        id: "vouch-004",
+        number: "004",
+        name: "Tanner Brooks",
+        relationship: "Teammate",
+        role: "SCAD Lacrosse · Close Defense",
+        quote: "You want KJ in your trenches. He sees three steps ahead and anticipates defensive rotations before the whistle even blows. Honest, hardworking, and zero ego.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-005",
+        number: "005",
+        name: "Sarah Lin",
+        relationship: "Mentorship",
+        role: "SCAD First-Year Resident Mentee",
+        quote: "KJ helped me navigate my first semester in design school when I was completely overwhelmed. He taught me how to break massive semester projects into daily sprints and never let self-doubt stop me from shipping work.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-006",
+        number: "006",
+        name: "Darnell Washington",
+        relationship: "Work",
+        role: "Campus Dining Operations Lead",
+        quote: "KJ manages breakfast rush hours with high energy, patience, and a smile for every single student and faculty member who walks through the doors. He makes team shifts run smoother every single week.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-007",
+        number: "007",
+        name: "Zackary Vance",
+        relationship: "Teammate",
+        role: "SCAD Lacrosse · Attackman",
+        quote: "KJ sets the standard for physical toughness and mental stamina. No matter how brutal the sprint conditioning is, he pushes the guy next to him to finish strong.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-008",
+        number: "008",
+        name: "Professor Julian Hayes",
+        relationship: "Mentorship",
+        role: "Applied AI & Computational Design Faculty",
+        quote: "Kendren pairs technical mastery of LLM APIs and Manim visualizations with genuine user empathy. His work on ASD-STE100 technical documentation synthesis shows a rare maturity in engineering clarity.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-009",
+        number: "009",
+        name: "Liam O'Connor",
+        relationship: "Teammate",
+        role: "SCAD Lacrosse · Face-off Specialist",
+        quote: "Relentless motor. Even in cold rain at 6am, KJ has the juice and gets everyone fired up to compete.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-010",
+        number: "010",
+        name: "Maya Chen",
+        relationship: "Creative",
+        role: "Visual Effects & Unreal Pipeline Artist",
+        quote: "Working with KJ on creative tooling showed me what real technical collaboration looks like. He listens first and solves the real bottleneck.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-011",
+        number: "011",
+        name: "Captain Rodriguez",
+        relationship: "Work",
+        role: "U.S. Army Engineering Liaison",
+        quote: "Kendren's discipline under high-pressure dive environments was exceptional. Methodical, calm, and reliable when the mission gets tough.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-012",
+        number: "012",
+        name: "Coach Miller",
+        relationship: "Coach",
+        role: "Strength & Conditioning Coach",
+        quote: "Best attendance and effort ratio in our entire athletic program. You don't have to coach Kendren on effort.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-013",
+        number: "013",
+        name: "Benji Harris",
+        relationship: "Teammate",
+        role: "SCAD Lacrosse · Goalie",
+        quote: "Having KJ leading our defense gives me total confidence in cage. He talks, he slides on time, and he takes accountability every single play.",
+        pinned: false,
+        status: "approved"
+      },
+      {
+        id: "vouch-014",
+        number: "014",
+        name: "Jordan Taylor",
+        relationship: "Mentorship",
+        role: "SCAD Design Student Association",
+        quote: "KJ is the kind of leader who creates room for other people to win. Humble, brilliant, and always ready to help.",
+        pinned: false,
+        status: "approved"
+      }
+    ];
+
+    let allVouches = getApprovedVouches();
+    let currentCategory = "all";
+    let wallQuery = "";
+
+    function getApprovedVouches() {
+      const stored = localStorage.getItem("not2l8_vouches");
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          const approved = parsed.filter(v => v.status === "approved");
+          return [...approved, ...INITIAL_WALL_VOUCHES];
+        } catch (e) {}
+      }
+      return INITIAL_WALL_VOUCHES;
+    }
+
+    function renderWall() {
+      const pinnedContainer = document.getElementById("pinned-grid");
+      const wallContainer = document.getElementById("wall-grid");
+
+      // Update counters
+      const approvedCount = allVouches.length;
+      document.getElementById("count-all").textContent = approvedCount;
+      const target = 25;
+      const pct = Math.min(100, Math.round((approvedCount / target) * 100));
+      document.getElementById("milestone-text").textContent = `${approvedCount} / ${target} (${pct}%)`;
+      document.getElementById("milestone-bar").style.width = `${pct}%`;
+
+      // Filtered set
+      const filtered = allVouches.filter(v => {
+        const catMatch = currentCategory === "all" || v.relationship === currentCategory;
+        const queryMatch = !wallQuery ||
+          v.name.toLowerCase().includes(wallQuery.toLowerCase()) ||
+          v.role.toLowerCase().includes(wallQuery.toLowerCase()) ||
+          v.quote.toLowerCase().includes(wallQuery.toLowerCase());
+        return catMatch && queryMatch;
+      });
+
+      // Pinned items (if category is all and no search)
+      if (currentCategory === "all" && !wallQuery) {
+        document.getElementById("pinned-section").style.display = "block";
+        const pinned = allVouches.filter(v => v.pinned);
+        pinnedContainer.innerHTML = pinned.map(v => createVouchCardHtml(v, true)).join("");
+      } else {
+        document.getElementById("pinned-section").style.display = "none";
+      }
+
+      // Main grid (unpinned or all matching)
+      const list = (currentCategory === "all" && !wallQuery) ? filtered.filter(v => !v.pinned) : filtered;
+
+      if (list.length === 0) {
+        wallContainer.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-muted);">No approved vouches found matching your filter.</div>`;
+        return;
+      }
+
+      wallContainer.innerHTML = list.map(v => createVouchCardHtml(v, false)).join("");
+    }
+
+    function createVouchCardHtml(v, isPinned) {
+      const initial = v.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
+      const pinBadge = isPinned ? `<span style="font-size: 0.6875rem; font-weight: 700; background: var(--badge-bg); color: var(--accent-primary); border: 1px solid var(--border-hover); padding: 0.15rem 0.5rem; border-radius: 9999px;">★ PINNED</span>` : "";
+
+      return `
+        <div class="bento-card" style="padding: 1.25rem; border-radius: 18px; border-color: ${isPinned ? 'var(--border-hover)' : 'var(--border-color)'}; box-shadow: ${isPinned ? '0 10px 25px -5px var(--accent-glow)' : 'var(--card-shadow)'};">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.85rem;">
+            <div style="display: flex; align-items: center; gap: 0.65rem;">
+              <div style="width: 38px; height: 38px; border-radius: 12px; background: var(--accent-gradient); color: #fff; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                ${initial}
+              </div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.9375rem; color: var(--text-primary); line-height: 1.2;">
+                  ${v.name}
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">
+                  ${v.role}
+                </div>
+              </div>
+            </div>
+            ${pinBadge}
+          </div>
+
+          <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55; font-style: italic; margin-bottom: 1rem;">
+            "${v.quote}"
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 0.65rem; font-size: 0.6875rem; color: var(--text-muted);">
+            <span class="tag-pill" style="font-weight: 600;">${v.relationship.toUpperCase()}</span>
+            <span style="font-family: var(--font-mono); font-weight: 600;">Vouch #${v.number}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function filterWallCategory(cat, btn) {
+      sounds.playPop();
+      currentCategory = cat;
+      document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      renderWall();
+    }
+
+    function handleWallSearch(q) {
+      wallQuery = q.trim();
+      renderWall();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      applyTheme();
+      renderWall();
+    });
+  </script>
+</body>
+</html>

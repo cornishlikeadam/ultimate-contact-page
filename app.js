@@ -7,7 +7,7 @@
  * ==========================================================================
  */
 
-const STATE_VERSION = "2.0.0";
+const STATE_VERSION = "2.1.0";
 
 // Default Configuration State (Pre-populated for Kendren J. Cornish)
 const DEFAULT_STATE = {
@@ -15,8 +15,8 @@ const DEFAULT_STATE = {
   profile: {
     name: "Kendren J. Cornish",
     title: "Applied AI Designer & Technologist",
-    badges: ["SCAD B.Des", "Google Ambassador", "U.S. Army Vet", "3Blue1Brown / Manim", "ASD-STE100"],
-    bio: "Applied AI designer bridging human creativity with Gemini, LLMs, and spatial technology. Building intelligent tools for animators, designers, and filmmakers at SCAD with mathematical visual storytelling and ASD-STE100 technical precision.",
+    badges: ["SCAD B.Des", "Google Ambassador", "U.S. Army Vet", "3Blue1Brown / Manim", "ASD-STE100", "NOT2L8 Protocol"],
+    bio: "Applied AI designer bridging human creativity with Gemini, LLMs, and spatial technology. Building intelligent tools for animators, designers, and filmmakers at SCAD with mathematical visual storytelling, ASD-STE100 technical precision, and NOT2L8 squad vouches.",
     location: "Savannah, GA",
     timezone: "America/New_York",
     email: "Kendren@proton.me",
@@ -29,6 +29,33 @@ const DEFAULT_STATE = {
   theme: "obsidian-dark",
   soundEnabled: true,
   links: [
+    {
+      id: "link-vouch-wall",
+      title: "NOT2L8 Testimonial Wall",
+      subtitle: "14 verified reviews from lacrosse teammates, coaches & faculty. Phase 1 goal: 25 vouches.",
+      url: "/wall",
+      category: "projects",
+      badge: "14/25 Target",
+      icon: "sparkles"
+    },
+    {
+      id: "link-vouch-form",
+      title: "Vouch for KJ (Takes 60 Seconds)",
+      subtitle: "Drop real words on what it's like being on the field, in the weight room, or in the studio with Kendren.",
+      url: "/vouch",
+      category: "connect",
+      badge: "Squad Ask",
+      icon: "message"
+    },
+    {
+      id: "link-wallet-pass",
+      title: "Apple Wallet Smart Pass & Feed",
+      subtitle: "Live status updates (NOW / NEXT) straight to your iPhone lock screen + instant contact card.",
+      url: "/card",
+      category: "connect",
+      badge: "Pass v2",
+      icon: "download"
+    },
     {
       id: "link-1",
       title: "Interactive Portfolio & Case Studies",

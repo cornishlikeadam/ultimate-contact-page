@@ -42,6 +42,15 @@
       </div>
 
       <div class="nav-actions">
+        <a href="/wall" class="icon-btn" title="Testimonial Wall" style="width: auto; padding: 0 0.8rem; font-size: 0.8125rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.35rem;">
+          <span>🧱</span> Wall
+        </a>
+        <a href="/vouch" class="icon-btn" title="Vouch for KJ" style="width: auto; padding: 0 0.8rem; font-size: 0.8125rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.35rem; color: var(--accent-primary); border-color: var(--border-hover);">
+          <span>✍️</span> Vouch
+        </a>
+        <a href="/card" class="icon-btn" title="Smart Card Pass" style="width: auto; padding: 0 0.8rem; font-size: 0.8125rem; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 0.35rem;">
+          <span>📇</span> Card
+        </a>
         <button id="sound-toggle-btn" class="icon-btn" onclick="toggleSound()" title="Toggle Sound Feedback">
           🔊
         </button>
@@ -56,6 +65,18 @@
         </button>
       </div>
     </header>
+
+    <!-- NOT2L8 Protocol Active Banner -->
+    <div style="background: rgba(99, 102, 241, 0.12); border: 1px solid var(--border-hover); border-radius: 16px; padding: 0.75rem 1.1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 0.65rem; font-size: 0.8125rem;">
+        <span style="background: var(--accent-primary); color: #fff; font-size: 0.6875rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 6px; letter-spacing: 0.04em;">NOT2L8</span>
+        <span style="color: var(--text-primary); font-weight: 600;">14 Approved Squad Vouches · Phase 1 Target: 25</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.65rem;">
+        <a href="/wall" style="font-size: 0.8125rem; color: var(--accent-primary); font-weight: 700; text-decoration: none;">View Wall (14) →</a>
+        <a href="/vouch" class="cta-button primary" style="width: auto; padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; text-decoration: none;">✍️ Vouch</a>
+      </div>
+    </div>
 
     <!-- Hero Card Profile Hub -->
     <section class="hero-card">
@@ -84,6 +105,7 @@
             <span class="chip">U.S. Army Vet</span>
             <span class="chip">3Blue1Brown / Manim</span>
             <span class="chip">ASD-STE100 Spec</span>
+            <span class="chip" style="color: var(--accent-primary); border-color: var(--border-hover);">NOT2L8 Protocol</span>
           </div>
         </div>
 
@@ -194,13 +216,17 @@
 
     <!-- Footer -->
     <footer class="page-footer">
-      <p>© 2026 Kendren J. Cornish · Applied Artificial Intelligence at SCAD</p>
+      <p>© 2026 Kendren J. Cornish · NOT2L8 Protocol · Applied AI at SCAD</p>
       <div class="footer-meta">
-        <button class="footer-link" style="background:none; border:none; cursor:pointer;" onclick="openCustomizer()">Customize Page</button>
+        <a href="/wall" class="footer-link">Testimonial Wall</a>
         <span>•</span>
-        <button class="footer-link" style="background:none; border:none; cursor:pointer;" onclick="downloadVCard()">Download vCard</button>
+        <a href="/vouch" class="footer-link">Vouch Form</a>
         <span>•</span>
-        <button class="footer-link" style="background:none; border:none; cursor:pointer;" onclick="cycleTheme()">Themes</button>
+        <a href="/card" class="footer-link">Smart Pass</a>
+        <span>•</span>
+        <a href="/admin" class="footer-link">Private Admin</a>
+        <span>•</span>
+        <button class="footer-link" style="background:none; border:none; cursor:pointer;" onclick="openCustomizer()">Customize</button>
       </div>
     </footer>
 
