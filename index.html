@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kendren J. Cornish | Ultimate Contact Link Hub</title>
+  <meta name="description" content="Applied AI Designer & Technologist at SCAD. Connect, view featured AI projects, schedule a call, or save digital vCard.">
+  <meta name="theme-color" content="#090b10">
+  
+  <!-- Open Graph / Social Sharing Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kendren J. Cornish | Ultimate Contact Link Hub">
+  <meta property="og:description" content="Applied AI Designer & Technologist at SCAD. Connect, view featured AI projects, 3Blue1Brown visualizations, ASD-STE100 technical documentation, or save contact info directly.">
+  <meta property="og:url" content="https://kendren.us">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Dynamic Lighting & Grid -->
+  <div class="ambient-bg">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+  </div>
+  <div class="grid-overlay"></div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Floating Toast Notifications -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Main Container -->
+  <main class="page-container">
+
+    <!-- Top Navigation & Controls -->
+    <header class="top-nav">
+      <div class="brand-pill">
+        <span class="status-dot-pulse"></span>
+        <span id="profile-status-text">Open to AI projects & collaborations</span>
+      </div>
+
+      <div class="nav-actions">
+        <button id="sound-toggle-btn" class="icon-btn" onclick="toggleSound()" title="Toggle Sound Feedback">
+          🔊
+        </button>
+        <button class="icon-btn" onclick="cycleTheme()" title="Switch Visual Theme">
+          🎨
+        </button>
+        <button class="icon-btn" onclick="shareCurrentUrl()" title="Share Link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+        </button>
+        <button class="icon-btn" onclick="openCustomizer()" title="Customize Page">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Card Profile Hub -->
+    <section class="hero-card">
+      <div class="hero-header">
+        <div class="avatar-wrapper">
+          <div class="avatar-frame" id="avatar-container">
+            <div class="avatar-fallback">KC</div>
+          </div>
+          <div class="badge-location-time">
+            <span>📍</span>
+            <span id="live-clock">Loading live time...</span>
+          </div>
+        </div>
+
+        <div class="hero-identity">
+          <h1 class="profile-name" id="profile-name">
+            Kendren J. Cornish
+            <span class="verified-badge" title="Verified Identity">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7l-4.1-4.1 1.4-1.4 2.7 2.7 6.4-6.4 1.4 1.4-7.8 7.8z"/></svg>
+            </span>
+          </h1>
+          <p class="profile-title" id="profile-title">Applied AI Designer & Technologist</p>
+          <div class="profile-badges" id="profile-badges">
+            <span class="chip">SCAD B.Des</span>
+            <span class="chip">Google Ambassador</span>
+            <span class="chip">U.S. Army Vet</span>
+            <span class="chip">3Blue1Brown / Manim</span>
+            <span class="chip">ASD-STE100 Spec</span>
+          </div>
+        </div>
+
+        <p class="profile-bio" id="profile-bio">
+          Applied AI designer bridging human creativity with Gemini, LLMs, and spatial technology. Building intelligent tools for animators, designers, and filmmakers at SCAD with mathematical visual storytelling and ASD-STE100 technical precision.
+        </p>
+
+        <!-- Direct Action Superpower Grid -->
+        <div class="action-grid">
+          <button id="btn-save-vcard" class="cta-button primary" title="Download iOS / Android vCard contact file">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Save Contact</span>
+          </button>
+
+          <button id="btn-open-msg" class="cta-button" title="Send a direct message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+            <span>Quick Message</span>
+          </button>
+
+          <button id="btn-copy-email" class="cta-button" title="Copy Kendren@proton.me to clipboard">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span>Copy Email</span>
+          </button>
+
+          <button id="btn-open-qr" class="cta-button" title="Open QR Code to share in person">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+            <span>QR Code</span>
+          </button>
+        </div>
+
+        <!-- Social Pills Tray -->
+        <div class="social-tray">
+          <a href="https://kendren.us" target="_blank" rel="noopener noreferrer" class="social-pill" onclick="sounds.playPop()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <span>kendren.us</span>
+          </a>
+          <a href="https://github.com/cornishlikeadam" target="_blank" rel="noopener noreferrer" class="social-pill" onclick="sounds.playPop()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://linkedin.com/in/kendren-cornish" target="_blank" rel="noopener noreferrer" class="social-pill" onclick="sounds.playPop()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            <span>LinkedIn</span>
+          </a>
+          <a href="mailto:Kendren@proton.me" class="social-pill" onclick="sounds.playPop()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span>ProtonMail</span>
+          </a>
+          <button id="btn-copy-phone" class="social-pill" style="cursor: pointer; background: transparent; border: 1px dashed var(--border-color);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>(817) 703-2310</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controls Bar: View Modes & Search -->
+    <div class="controls-bar">
+      <div class="view-tabs">
+        <button id="tab-bento" class="view-tab active">
+          <span>🍱</span> Bento Grid
+        </button>
+        <button id="tab-links" class="view-tab">
+          <span>🔗</span> Link List
+        </button>
+        <button id="tab-vcard" class="view-tab">
+          <span>📇</span> Digital Pass
+        </button>
+      </div>
+
+      <div class="search-box">
+        <span class="search-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </span>
+        <input type="text" id="search-input" class="search-input" placeholder="Search links, 3Blue1Brown, ASD-STE100, AI...">
+      </div>
+    </div>
+
+    <!-- Category Filter Chips -->
+    <div class="category-filters">
+      <button class="filter-chip active" data-category="all">All Channels</button>
+      <button class="filter-chip" data-category="projects">🚀 Flagship & Standards</button>
+      <button class="filter-chip" data-category="connect">📬 Direct Inquiries</button>
+      <button class="filter-chip" data-category="profiles">🌐 Social & Networks</button>
+    </div>
+
+    <!-- VIEW 1: Bento Grid Container -->
+    <section id="bento-view" class="bento-grid"></section>
+
+    <!-- VIEW 2: Links List Container -->
+    <section id="links-view" class="links-list" style="display: none;"></section>
+
+    <!-- VIEW 3: Digital Wallet vCard Container -->
+    <section id="vcard-view" class="vcard-view-container" style="display: none;">
+      <div class="wallet-card">
+        <div class="wallet-card-chip"></div>
+        <h2 class="wallet-card-name" id="wallet-name">Kendren J. Cornish</h2>
+        <div class="wallet-card-sub" id="wallet-title">Applied AI Designer & Technologist</div>
+        <div class="wallet-card-details" id="wallet-details-box"></div>
+        <div class="wallet-actions">
+          <button id="wallet-download-btn" class="btn-primary-block">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            Save to Contacts (.vcf)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <p>© 2026 Kendren J. Cornish · Applied Artificial Intelligence at SCAD</p>
+      <div class="footer-meta">
+        <button class="footer-link" style="background:none; border:none; cursor:pointer;" onclick="openCustomizer()">Customize Page</button>
+        <span>•</span>
+        <button class="footer-link" style="background:none; border:none; cursor:pointer;" onclick="downloadVCard()">Download vCard</button>
+        <span>•</span>
+        <button class="footer-link" style="background:none; border:none; cursor:pointer;" onclick="cycleTheme()">Themes</button>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- =======================================================================
+       MODAL 1: QR CODE SHARE
+       ======================================================================= -->
+  <div id="qr-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close-btn" onclick="closeQrModal()">✕</button>
+      <h3 class="modal-title">Scan & Share Contact</h3>
+      <p class="modal-sub">Scan with any mobile camera to view this contact page instantly.</p>
+
+      <div class="qr-display-box" id="qr-canvas-wrapper"></div>
+
+      <div class="qr-link-copy">
+        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;" id="qr-url-text">https://kendren.us</span>
+        <button class="icon-btn" style="width: 32px; height: 32px;" onclick="copyToClipboard(document.getElementById('qr-url-text').textContent, 'URL copied!')" title="Copy URL">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        </button>
+      </div>
+
+      <button class="btn-primary-block" onclick="downloadQrImage()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        Download QR Code Image
+      </button>
+      <button class="btn-secondary-block" onclick="shareCurrentUrl()">
+        Share via Mobile Sheet
+      </button>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       MODAL 2: DIRECT QUICK MESSAGE
+       ======================================================================= -->
+  <div id="message-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close-btn" onclick="closeMessageModal()">✕</button>
+      <h3 class="modal-title">Send a Direct Message</h3>
+      <p class="modal-sub">Send an inquiry directly to Kendren's priority ProtonMail inbox.</p>
+
+      <form id="quick-message-form">
+        <div class="form-group">
+          <label class="form-label" for="msg-sender-name">Your Name</label>
+          <input type="text" id="msg-sender-name" class="form-input" placeholder="e.g. Maya Chen" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="msg-sender-email">Your Email Address</label>
+          <input type="email" id="msg-sender-email" class="form-input" placeholder="e.g. maya@domain.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="msg-topic">Topic / Purpose</label>
+          <select id="msg-topic" class="form-select">
+            <option value="AI Collaboration / Freelance Project">AI Collaboration / Freelance Project</option>
+            <option value="Google Student Ambassador Inquiry">Google Student Ambassador Inquiry</option>
+            <option value="3Blue1Brown / Mathematical Animation">3Blue1Brown / Mathematical Animation</option>
+            <option value="ASD-STE100 & Technical Documentation">ASD-STE100 & Technical Documentation</option>
+            <option value="Speaking, Workshop, or Panel">Speaking, Workshop, or Panel</option>
+            <option value="Coffee Chat / General Networking">Coffee Chat / General Networking</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="msg-text">Message Note</label>
+          <textarea id="msg-text" class="form-textarea" placeholder="Tell Kendren about your project, timeline, or idea..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary-block">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send via Email Client
+        </button>
+
+        <button type="button" class="btn-secondary-block" onclick="copyMessageDraft()">
+          Copy Message Draft Instead
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       DRAWER: IN-PAGE LIVE CUSTOMIZER & EXPORTER
+       ======================================================================= -->
+  <div id="customizer-drawer" class="drawer-overlay">
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <h3 style="font-size: 1.15rem; font-weight: 700;">⚙️ Profile Customizer</h3>
+        <button class="modal-close-btn" onclick="closeCustomizer()" style="position: static;">✕</button>
+      </div>
+
+      <div class="drawer-body">
+        <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+          Edit any field below to customize your landing page in real time. All changes are saved automatically to local storage.
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="cust-name" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Professional Title</label>
+          <input type="text" id="cust-title" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status Text</label>
+          <input type="text" id="cust-status" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Badges (comma separated)</label>
+          <input type="text" id="cust-badges" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Bio Description</label>
+          <textarea id="cust-bio" class="form-textarea"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <input type="text" id="cust-location" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="cust-email" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="text" id="cust-phone" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Personal Website URL</label>
+          <input type="url" id="cust-website" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Avatar Image URL (Leave blank for initials)</label>
+          <input type="text" id="cust-avatar" class="form-input" placeholder="https://example.com/photo.jpg">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Visual Theme</label>
+          <select id="cust-theme" class="form-select">
+            <option value="obsidian-dark">Obsidian Dark (Default)</option>
+            <option value="studio-light">Studio Light (Minimalist)</option>
+            <option value="cyber-violet">Cyber Violet (Electric)</option>
+            <option value="terminal-emerald">Terminal Emerald (Slate & Green)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <button class="btn-primary-block" onclick="saveCustomizer()">
+          Save & Apply Changes
+        </button>
+        <button class="btn-secondary-block" onclick="exportCustomizedHtml()" title="Download a standalone index.html with your changes baked in">
+          🚀 Export Standalone index.html
+        </button>
+        <button class="footer-link" style="background: none; border: none; font-size: 0.75rem; color: #ef4444; cursor: pointer; text-align: center; margin-top: 0.25rem;" onclick="resetDefaultState()">
+          Reset to Factory Defaults
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Code Generator Library -->
+  <script src="qrcode.min.js"></script>
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
